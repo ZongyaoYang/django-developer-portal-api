@@ -38,7 +38,7 @@ class Membership(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name="organization_membership",
+        related_name="organization_memberships",
     )
 
     role = models.CharField(max_length=20, choices=Role.choices, default=Role.DEVELOPER)
@@ -49,7 +49,7 @@ class Membership(models.Model):
         constraints = [  # noqa: RUF012
             models.UniqueConstraint(
                 fields=["organization", "user"],
-                name="unique_organization_membership",
+                name="unique_organization_memberships",
             )
         ]
 

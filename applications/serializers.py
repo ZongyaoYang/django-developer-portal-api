@@ -41,7 +41,7 @@ class DeveloperApplicationSerializer(serializers.ModelSerializer):
         allowed_roles = [Membership.Role.ADMIN, Membership.Role.DEVELOPER]
 
         has_permission = Membership.objects.filter(
-            organization=organization, user=request.user, role_in=allowed_roles
+            organization=organization, user=request.user, role__in=allowed_roles
         ).exists()
         
         if not has_permission:

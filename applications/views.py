@@ -18,7 +18,7 @@ class DeveloperApplicationViewSet(ModelViewSet):
         request = cast(Request, self.request)
         queryset = (
             DeveloperApplication.objects.filter(
-                organization_memberships_user=request.user
+                organization__memberships__user=self.request.user
             )
             .select_related("organization", "created_by")
             .distinct()

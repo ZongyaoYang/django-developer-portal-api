@@ -1,4 +1,7 @@
+from typing import cast
+
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.request import Request
 from rest_framework.viewsets import ModelViewSet
 
 from .models import DeveloperApplication
@@ -12,15 +15,16 @@ class DeveloperApplicationViewSet(ModelViewSet):
     http_method_names = ["get", "post", "patch", "delete", "head", "options"]  # noqa: RUF012
 
     def get_queryset(self):
+        request = cast(Request, self.request)
         queryset = (
             DeveloperApplication.objects.filter(
-                organization_memberships_user=self.request.user
+                organization_memberships_user=request.user
             )
             .select_related("organization", "created_by")
             .distinct()
         )
         
-        status_value = self.request.query_params.get("status")
+        status_value = request.query_params.get("status")
         
         if status_value:
             queryset = queryset.filter(status=status_value)

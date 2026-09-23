@@ -7,4 +7,4 @@ router.register(
     "applications", DeveloperApplicationViewSet, basename="developer-application"
 )
 
-urlpattern = router.urls
+urlpatterns = router.urls

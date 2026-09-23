@@ -30,3 +30,6 @@ class DeveloperApplicationViewSet(ModelViewSet):
             queryset = queryset.filter(status=status_value)
             
         return queryset
+    
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
